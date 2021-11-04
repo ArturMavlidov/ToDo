@@ -10,6 +10,34 @@
 </head>
 <body>
 
+  <div class="container">
+
+    <div class="todo">
+      <div class="todo-header">
+        <div class="todo-header__search">
+          <input class="form-control todo-header__input" type="text" placeholder="Search..." aria-label="Search">
+        </div>
+        <div class="todo-header__buttons">
+          <button type="button" class="btn btn-outline-primary">All</button>
+          <button type="button" class="btn btn-outline-success">Done</button>
+        </div>
+      </div>
+      <div class="todo-tasks" data-component="todo-tasks">
+        <div class="tasks-item" data-role="tasks-item">
+          <div class="tasks-text">Погулять с собакой</div>
+          <div class="tasks-date">1.11.2021, 19:08</div>
+        </div>
+      </div>
+      <div class="todo-add">
+        <form name="publish" action="#">
+          <input type="text" name="messagee" class="form-control todo-add__input" data-role="add-input" placeholder="Введите новую задачу...">
+          <button type="button" class="btn btn-outline-success" data-role="add-button">Add</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
   <script src="/dist/app.js"></script>
 </body>
 </html>
