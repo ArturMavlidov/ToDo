@@ -37,7 +37,7 @@ module.exports = {
     ],
   },
   devServer: {
-    client: { overlay: true },
+    client: { overlay: false },
     static: { directory: path.join(__dirname) },
   },
   plugins: [

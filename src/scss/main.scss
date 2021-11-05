@@ -1,1 +1,118 @@
+@import url(reset.scss);
 @import "~bootstrap/scss/bootstrap";
+
+body {
+  font-family: "Roboto";
+  font-size: 18px;
+}
+
+.container {
+  padding: 0;
+  padding-top: 100px;
+  width: 100%;
+  max-width: 515px;
+}
+
+.form-control {
+  border: 1px solid #000;
+}
+
+.todo {
+  &-header {
+    display: flex;
+
+    &__search {
+      margin-right: 12px;
+    }
+
+    &__input {
+      width: 304px;
+      height: 50px;
+
+      &::placeholder {
+        font-size: 18px;
+        color: #dedede;
+      }
+    }
+    &__buttons {
+      display: flex;
+
+      button {
+        width: 92px;
+        height: 50px;
+        margin-right: 15px;
+      }
+    }
+  }
+
+  &-tasks {
+    margin-right: -15px;
+    max-height: 310px;
+    overflow: auto;
+    margin-top: 15px;
+  }
+
+  &-add {
+    form {
+      display: flex;
+      margin-top: 15px;
+    }
+
+    &__input {
+      width: 350px;
+      height: 50px;
+      margin-right: 15px;
+
+      &::placeholder {
+        color: #dedede;
+      }
+    }
+
+    button {
+      width: 150px;
+      height: 50px;
+    }
+  }
+}
+
+.tasks-item {
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  width: 515px;
+  min-height: 50px;
+  padding-left: 30px;
+  padding-right: 23px;
+  border: 1px solid #000;
+  cursor: pointer;
+
+  &.done {
+    background-color: #e8ffd7;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+
+.tasks-date {
+  min-width: 120px;
+  margin-left: auto;
+  font-size: 14px;
+  color: #757575;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #d4d4d4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6372f8;
+}
