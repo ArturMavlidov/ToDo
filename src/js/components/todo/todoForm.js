@@ -1,7 +1,8 @@
 import { selectRole } from "../../helpers";
+import { v4 } from "uuid";
 
-export default function todoForm({ addTask }) {
-  const addInput = selectRole('add-input');
+export default function todoForm({ addTask, doneTask }) {
+  const addInput = selectRole("add-input");
   const formButton = selectRole("add-button");
   let now;
   let time;
@@ -19,23 +20,24 @@ export default function todoForm({ addTask }) {
     return {
       text: addInput.value,
       date: date,
-      isTrue: true
-    }
-  }
+      isDone: false,
+      id: v4()
+    };
+  };
 
   const clickFormButton = () => {
-    if (getTask().text != '') {
+    if (getTask().text != "") {
       addTask(getTask());
     }
-    addInput.value = '';
-  }
+    addInput.value = "";
+  };
 
   const pressEnter = (event) => {
-    if (event.code === 'Enter') {
+    if (event.code === "Enter") {
       clickFormButton();
     }
-  }
+  };
 
   addInput.addEventListener("keyup", pressEnter);
-  formButton.addEventListener('click', clickFormButton)
+  formButton.addEventListener("click", clickFormButton);
 }

@@ -10,7 +10,11 @@ body {
   padding: 0;
   padding-top: 100px;
   width: 100%;
-  max-width: 515px;
+  max-width: 535px;
+}
+
+svg {
+  fill: none;
 }
 
 .form-control {
@@ -75,6 +79,22 @@ body {
   }
 }
 
+.tasks-wrapper {
+  display: flex;
+
+  &.done {
+    .tasks-item {
+      background-color: #e8ffd7;
+    }
+  }
+
+  &:hover {
+    .tasks-close {
+      display: block;
+    }
+  }
+}
+
 .tasks-item {
   display: flex;
   align-items: center;
@@ -86,10 +106,6 @@ body {
   border: 1px solid #000;
   cursor: pointer;
 
-  &.done {
-    background-color: #e8ffd7;
-  }
-
   &:not(:last-child) {
     margin-bottom: 15px;
   }
@@ -100,6 +116,16 @@ body {
   margin-left: auto;
   font-size: 14px;
   color: #757575;
+}
+
+.tasks-close {
+  display: none;
+  height: 10px;
+  position: relative;
+  top: 12px;
+  left: 10px;
+  cursor: pointer;
+  z-index: 2;
 }
 
 /* Scrollbar */
@@ -116,3 +142,4 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #6372f8;
 }
+

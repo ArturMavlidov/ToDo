@@ -7,6 +7,9 @@ export const qsa = (selector, context = null) =>
 export const selectRole = (role, context = null) =>
   qs(`[data-role~="${role}"]`, context);
 
+  export const selectId= (id, context = null) =>
+    qs(`[data-id~="${id}"]`, context);
+
 export const selectRoles = (selector, context = null) =>
   qsa(`[data-role~="${selector}"]`, context);
 
@@ -27,3 +30,5 @@ export const replaceHtml = ({ component, html }) => {
   component.innerHTML = html;
 };
 
+export const closestRole = (element, role) =>
+  element.closest(`[data-role~="${role}"]`);
