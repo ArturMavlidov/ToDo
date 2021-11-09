@@ -1,11 +1,13 @@
 import {
   selectComponent,
   addHtml,
+  replaceHtml,
   closestRole,
   selectId,
 } from "../../helpers";
 
 import TodoForm from "./todoForm";
+import filters from "./filters";
 
 export default function todoComponent() {
   const tasksContainer = selectComponent("todo-tasks");
@@ -15,6 +17,14 @@ export default function todoComponent() {
     tasks.push(task);
     taskUpdated(task);
   };
+
+  const showDoneTask = (tasks) => {
+    tasksContainer.innerHTML = '';
+
+    tasks.forEach(item => {
+      addHtml({ component: tasksContainer, html: buildTask(item, "done") });
+    })
+  }
 
   const clickTasksContainer = ({ target }) => {
     const taskItem = closestRole(target, "task-wrapper");
@@ -45,8 +55,8 @@ export default function todoComponent() {
     tasksContainer.addEventListener("click", clickTasksContainer);
   };
 
-  const buildTask = (lastTask) => {
-    return `<div class="tasks-wrapper" data-role="task-wrapper" data-id="${lastTask.id}">
+  const buildTask = (lastTask, activeClass = '') => {
+    return `<div class="tasks-wrapper ${activeClass}" data-role="task-wrapper" data-id="${lastTask.id}">
               <div class="tasks-item" data-role="tasks-item">
                 <div class="tasks-text">${lastTask.text}</div>
                 <div class="tasks-date">${lastTask.date}</div>
@@ -65,6 +75,7 @@ export default function todoComponent() {
 
   const initComponents = () => {
     TodoForm({ addTask });
+    filters({ showDoneTask, tasks });
   };
 
   const init = () => {

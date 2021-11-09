@@ -1,7 +1,7 @@
-import { selectRole } from "../../helpers";
+import { selectRole } from "../../../helpers";
 import { v4 } from "uuid";
 
-export default function todoForm({ addTask, doneTask }) {
+export default function todoForm({ addTask }) {
   const addInput = selectRole("add-input");
   const formButton = selectRole("add-button");
   let now;
