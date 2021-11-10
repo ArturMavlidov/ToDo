@@ -1,10 +1,4 @@
-import {
-  selectComponent,
-  addHtml,
-  replaceHtml,
-  closestRole,
-  selectId,
-} from "../../helpers";
+import { selectComponent, addHtml, closestRole, selectId } from "../../helpers";
 
 import TodoForm from "./todoForm";
 import filters from "./filters";
@@ -18,13 +12,15 @@ export default function todoComponent() {
     taskUpdated(task);
   };
 
-  const showDoneTask = (tasks) => {
-    tasksContainer.innerHTML = '';
+  const showTasks = (tasks) => {
+    tasksContainer.innerHTML = "";
 
-    tasks.forEach(item => {
-      addHtml({ component: tasksContainer, html: buildTask(item, "done") });
-    })
-  }
+    tasks.forEach((item) => {
+      item.isDone == true
+        ? addHtml({ component: tasksContainer, html: buildTask(item, "done") })
+        : addHtml({ component: tasksContainer, html: buildTask(item) });
+    });
+  };
 
   const clickTasksContainer = ({ target }) => {
     const taskItem = closestRole(target, "task-wrapper");
@@ -55,8 +51,8 @@ export default function todoComponent() {
     tasksContainer.addEventListener("click", clickTasksContainer);
   };
 
-  const buildTask = (lastTask, activeClass = '') => {
-    return `<div class="tasks-wrapper ${activeClass}" data-role="task-wrapper" data-id="${lastTask.id}">
+  const buildTask = (lastTask, doneClass = "") => {
+    return `<div class="tasks-wrapper ${doneClass}" data-role="task-wrapper" data-id="${lastTask.id}">
               <div class="tasks-item" data-role="tasks-item">
                 <div class="tasks-text">${lastTask.text}</div>
                 <div class="tasks-date">${lastTask.date}</div>
@@ -75,7 +71,7 @@ export default function todoComponent() {
 
   const initComponents = () => {
     TodoForm({ addTask });
-    filters({ showDoneTask, tasks });
+    filters({ showTasks, tasks });
   };
 
   const init = () => {
