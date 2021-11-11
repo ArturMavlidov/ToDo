@@ -1,17 +1,16 @@
 import { selectRole } from "../../../helpers";
 
-export default function filters({ showTasks, tasks }) {
+export default function filters({ showTasks, tasks, getTasks }) {
   const btnAll = selectRole("btn-all");
   const btnDone = selectRole("btn-done");
 
   const clickBtnDone = () => {
-    let doneTasks = tasks.filter((task) => task.isDone == true)
-    showTasks(doneTasks);
+    showTasks(getTasks('done'));
   };
 
   const clickBtnAll = () => {
-    showTasks(tasks);
-  }
+    showTasks(getTasks());
+  };
 
   const bindEvents = () => {
     btnDone.addEventListener("click", clickBtnDone);
@@ -25,7 +24,7 @@ export default function filters({ showTasks, tasks }) {
 
   const init = () => {
     bindEvents();
-  }
+  };
 
   const destroy = () => {
     unbindEvents();
@@ -35,6 +34,6 @@ export default function filters({ showTasks, tasks }) {
 
   return {
     init,
-    destroy
+    destroy,
   };
 }
