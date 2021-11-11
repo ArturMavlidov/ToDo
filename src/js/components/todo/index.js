@@ -4,8 +4,8 @@ import TodoForm from "./todoForm";
 import Filters from "./filters";
 
 
-export default function todoComponent() {
-  const tasksContainer = selectComponent("todo-tasks");
+export default function todoComponent(context) {
+  const tasksContainer = selectComponent("todo-tasks", context);
   let tasks = [];
 
   const addTask = (task) => {
@@ -69,7 +69,6 @@ export default function todoComponent() {
   };
 
   const getTasks = (isDone) => {
-    // isDone ? tasks.filter((task) => task.isDone == true) : tasks;
     if (isDone) {
       return tasks.filter((task) => task.isDone == true);
     } else {
@@ -86,7 +85,7 @@ export default function todoComponent() {
 
   const initComponents = () => {
     TodoForm({ addTask });
-    Filters({ showTasks, tasks, getTasks });
+    Filters({ showTasks, tasks, getTasks, context });
   };
 
   const init = () => {

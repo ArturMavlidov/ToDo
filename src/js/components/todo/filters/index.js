@@ -1,11 +1,11 @@
 import { selectRole } from "../../../helpers";
 
-export default function filters({ showTasks, tasks, getTasks }) {
-  const btnAll = selectRole("btn-all");
-  const btnDone = selectRole("btn-done");
+export default function filters({ showTasks, getTasks, context }) {
+  const btnAll = selectRole("btn-all", context);
+  const btnDone = selectRole("btn-done", context);
 
   const clickBtnDone = () => {
-    showTasks(getTasks('done'));
+    showTasks(getTasks(true));
   };
 
   const clickBtnAll = () => {

@@ -1,6 +1,9 @@
-import todoComponent from "./js/components/todo";
+import TodoComponent from "./js/components/todo";
 import "./scss/main.scss";
 import './css/main.css'
 import './scss/main.scss'
+import { selectRole } from "./js/helpers";
 
-todoComponent();
+const todo = selectRole('todo')
+
+todo && TodoComponent(todo);
