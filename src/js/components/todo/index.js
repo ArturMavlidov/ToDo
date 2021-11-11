@@ -2,6 +2,7 @@ import { selectComponent, addHtml, closestRole, selectId } from "../../helpers";
 
 import TodoForm from "./todoForm";
 import Filters from "./filters";
+import SearchPanel from "./search-panel";
 
 
 export default function todoComponent(context) {
@@ -76,16 +77,14 @@ export default function todoComponent(context) {
     }
   }
 
-  const getDoneTasks = () => tasks.filter((task) => task.isDone == true);
-
-
   const taskUpdated = (task) => {
     addHtml({ component: tasksContainer, html: buildTask(task) });
   };
 
   const initComponents = () => {
     TodoForm({ addTask });
-    Filters({ showTasks, tasks, getTasks, context });
+    Filters({ showTasks, getTasks, context });
+    SearchPanel({ showTasks, getTasks, context });
   };
 
   const init = () => {
