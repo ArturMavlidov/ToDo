@@ -26,7 +26,7 @@ export default function todoForm({ addTask }) {
   };
 
   const clickFormButton = () => {
-    if (getTask().text != "") {
+    if (getTask().text.trim() != "") {
       addTask(getTask());
     }
     addInput.value = "";
