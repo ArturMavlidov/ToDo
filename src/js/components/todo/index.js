@@ -3,17 +3,17 @@ import { selectComponent, addHtml, closestRole, selectId } from "../../helpers";
 import TodoForm from "./todoForm";
 import Filters from "./filters";
 import SearchPanel from "./search-panel";
-import Storage from "../../service/storage";
+import StorageService from "../../service/storage";
 
 
 export default function todoComponent(context) {
   const tasksContainer = selectComponent("todo-tasks", context);
-  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  let tasks = [];
 
   const addTask = (task) => {
     tasks.push(task);
     taskUpdated(task);
-    Storage.set(JSON.stringify(tasks));
+    StorageService.set(JSON.stringify(tasks));
   };
 
   const showTasks = (tasks) => {
@@ -37,14 +37,14 @@ export default function todoComponent(context) {
       const taskCloseId = taskItem.dataset.id;
       tasks = tasks.filter((item) => item.id != taskCloseId);
       taskItem.remove();
-      return Storage.update();
+      return StorageService.update(tasks);
     }
 
     const { id: taskId } = taskItem.dataset;
     const targetTask = tasks.find((item) => item.id == taskId);
     targetTask.isDone = !targetTask.isDone;
     updateUi(targetTask);
-    Storage.update(tasks);
+    StorageService.update(tasks);
   };
 
   const updateUi = ({ id, isDone }) => {
@@ -52,11 +52,6 @@ export default function todoComponent(context) {
     isDone
       ? taskWrapper.classList.add("done")
       : taskWrapper.classList.remove("done");
-  };
-
-  const bindEvents = () => {
-    tasksContainer.addEventListener("click", clickTasksContainer);
-    document.addEventListener('DOMContentLoaded', Storage.load(taskUpdated));
   };
 
   const buildTask = (lastTask) => {
@@ -92,9 +87,19 @@ export default function todoComponent(context) {
     SearchPanel({ showTasks, getTasks, context });
   };
 
+  const pageUpdated = () => {
+    StorageService.get(taskUpdated);
+    tasks = StorageService.get();
+  }
+
+  const bindEvents = () => {
+    tasksContainer.addEventListener("click", clickTasksContainer);
+  };
+
   const init = () => {
     initComponents();
     bindEvents();
+    pageUpdated();
   };
 
   init();

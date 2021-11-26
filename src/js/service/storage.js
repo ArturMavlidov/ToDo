@@ -7,15 +7,20 @@ export default {
     localStorage.removeItem("tasks");
   },
 
+  get(fn) {
+    const todos = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    if (fn) {
+      todos.forEach((item) => {
+        fn(item);
+      });
+    }
+
+    return todos;
+  },
+
   update(tasks) {
     this.remove();
     this.set(JSON.stringify(tasks));
-  },
-
-  load(fn) {
-    const todos = JSON.parse(localStorage.getItem("tasks")) || [];
-    todos.forEach((item) => {
-      fn(item);
-    });
   }
 };

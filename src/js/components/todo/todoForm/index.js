@@ -4,13 +4,11 @@ import { v4 } from "uuid";
 export default function todoForm({ addTask }) {
   const addInput = selectRole("add-input");
   const formButton = selectRole("add-button");
-  let now;
-  let time;
   let date;
 
   const setDate = () => {
-    now = new Date().toLocaleDateString();
-    time = new Date().toLocaleTimeString().slice(0, -3);
+    let now = new Date().toLocaleDateString();
+    let time = new Date().toLocaleTimeString().slice(0, -3);
     date = now + " " + time;
   };
 
