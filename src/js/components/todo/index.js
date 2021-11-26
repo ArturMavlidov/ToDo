@@ -3,15 +3,17 @@ import { selectComponent, addHtml, closestRole, selectId } from "../../helpers";
 import TodoForm from "./todoForm";
 import Filters from "./filters";
 import SearchPanel from "./search-panel";
+import Storage from "../../service/storage";
 
 
 export default function todoComponent(context) {
   const tasksContainer = selectComponent("todo-tasks", context);
-  let tasks = [];
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   const addTask = (task) => {
     tasks.push(task);
     taskUpdated(task);
+    Storage.set(JSON.stringify(tasks));
   };
 
   const showTasks = (tasks) => {
@@ -34,13 +36,15 @@ export default function todoComponent(context) {
     if (taskClose) {
       const taskCloseId = taskItem.dataset.id;
       tasks = tasks.filter((item) => item.id != taskCloseId);
-      return taskItem.remove();
+      taskItem.remove();
+      return Storage.update();
     }
 
     const { id: taskId } = taskItem.dataset;
     const targetTask = tasks.find((item) => item.id == taskId);
     targetTask.isDone = !targetTask.isDone;
     updateUi(targetTask);
+    Storage.update(tasks);
   };
 
   const updateUi = ({ id, isDone }) => {
@@ -52,6 +56,7 @@ export default function todoComponent(context) {
 
   const bindEvents = () => {
     tasksContainer.addEventListener("click", clickTasksContainer);
+    document.addEventListener('DOMContentLoaded', Storage.load(taskUpdated));
   };
 
   const buildTask = (lastTask) => {
