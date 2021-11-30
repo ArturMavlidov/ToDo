@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 
 export default function todoForm({ addTask }) {
   const addInput = selectRole("add-input");
-  const formButton = selectRole("add-button");
+  const todoForm = selectRole("todo-form");
   let date;
 
   const setDate = () => {
@@ -19,23 +19,17 @@ export default function todoForm({ addTask }) {
       text: addInput.value,
       date: date,
       isDone: false,
-      id: v4()
+      id: v4(),
     };
   };
 
-  const clickFormButton = () => {
+  const sendForm = (e) => {
+    e.preventDefault();
     if (getTask().text.trim() != "") {
       addTask(getTask());
     }
     addInput.value = "";
   };
 
-  const pressEnter = (event) => {
-    if (event.code === "Enter") {
-      clickFormButton();
-    }
-  };
-
-  addInput.addEventListener("keyup", pressEnter);
-  formButton.addEventListener("click", clickFormButton);
+  todoForm.addEventListener("submit", sendForm);
 }

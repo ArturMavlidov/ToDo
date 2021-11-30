@@ -5,12 +5,12 @@ import Filters from "./filters";
 import SearchPanel from "./search-panel";
 import StorageService from "../../service/storage";
 
-
 export default function todoComponent(context) {
   const tasksContainer = selectComponent("todo-tasks", context);
   let tasks = [];
 
   const addTask = (task) => {
+    console.log("s");
     tasks.push(task);
     taskUpdated(task);
     StorageService.set(JSON.stringify(tasks));
@@ -22,8 +22,8 @@ export default function todoComponent(context) {
     tasks.forEach((item) => {
       addHtml({
         component: tasksContainer,
-        html: buildTask(item)
-      })
+        html: buildTask(item),
+      });
     });
   };
 
@@ -73,9 +73,9 @@ export default function todoComponent(context) {
     if (isDone) {
       return tasks.filter((task) => task.isDone == true);
     } else {
-      return tasks
+      return tasks;
     }
-  }
+  };
 
   const taskUpdated = (task) => {
     addHtml({ component: tasksContainer, html: buildTask(task) });
@@ -90,7 +90,7 @@ export default function todoComponent(context) {
   const pageUpdated = () => {
     StorageService.get(taskUpdated);
     tasks = StorageService.get();
-  }
+  };
 
   const bindEvents = () => {
     tasksContainer.addEventListener("click", clickTasksContainer);
