@@ -10,7 +10,7 @@ body {
   padding: 0;
   padding-top: 100px;
   width: 100%;
-  max-width: 535px;
+  max-width: 575px;
 }
 
 svg {
@@ -88,9 +88,15 @@ svg {
     }
   }
 
+  &.edit {
+    .tasks-item {
+      background-color: #eff17a;
+    }
+  }
+
   &:hover {
-    .tasks-close {
-      display: block;
+    .tasks-icons {
+      display: flex;
     }
   }
 }
@@ -98,17 +104,22 @@ svg {
 .tasks-item {
   display: flex;
   align-items: center;
-  overflow: auto;
-  width: 515px;
+  min-width: 515px;
   min-height: 50px;
   padding-left: 30px;
   padding-right: 23px;
+  margin-right: 20px;
   border: 1px solid #000;
   cursor: pointer;
 
   &:not(:last-child) {
     margin-bottom: 15px;
   }
+}
+
+.tasks-text {
+  width: 300px;
+  cursor: pointer;
 }
 
 .tasks-date {
@@ -118,14 +129,51 @@ svg {
   color: #757575;
 }
 
-.tasks-close {
-  display: none;
-  height: 10px;
+/* Icons */
+
+.task-icons {
+  display: flex;
+  align-items: center;
   position: relative;
-  top: 12px;
-  left: 10px;
-  cursor: pointer;
+  bottom: 5px;
   z-index: 2;
+
+  svg {
+    cursor: pointer;
+  }
+}
+
+.task-close {
+  margin-right: 10px;
+}
+
+.task-edit {
+  fill: #ccc;
+
+  &:hover {
+    fill: darken(#ccc, 10%);
+  }
+}
+
+.task-edit,
+.cancel,
+.accept {
+  transition: fill .1s linear;
+}
+
+.cancel {
+  fill: #D94A4A;
+
+  &:hover {
+    fill: darken(#D94A4A, 10%);
+  }
+}
+
+.accept {
+  fill: #ccc;
+  &:hover {
+    fill: #14AE07;
+  }
 }
 
 /* Scrollbar */
@@ -143,3 +191,8 @@ svg {
   background: #6372f8;
 }
 
+/* Helpers */
+
+.dn {
+  display: none;
+}
