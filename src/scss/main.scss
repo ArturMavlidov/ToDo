@@ -30,7 +30,7 @@ svg {
     }
 
     &__input {
-      width: 304px;
+      width: 350px;
       height: 50px;
 
       &::placeholder {
@@ -42,7 +42,7 @@ svg {
       display: flex;
 
       button {
-        width: 92px;
+        width: 68.5px;
         height: 50px;
         margin-right: 15px;
       }
@@ -65,7 +65,7 @@ svg {
     &__input {
       width: 350px;
       height: 50px;
-      margin-right: 15px;
+      margin-right: 12px;
 
       &::placeholder {
         color: #dedede;
@@ -95,7 +95,7 @@ svg {
   }
 
   &:hover {
-    .tasks-icons {
+    .task-icons {
       display: flex;
     }
   }
@@ -104,7 +104,7 @@ svg {
 .tasks-item {
   display: flex;
   align-items: center;
-  min-width: 515px;
+  min-width: 514px;
   min-height: 50px;
   padding-left: 30px;
   padding-right: 23px;
@@ -132,7 +132,7 @@ svg {
 /* Icons */
 
 .task-icons {
-  display: flex;
+  display: none;
   align-items: center;
   position: relative;
   bottom: 5px;
@@ -154,7 +154,6 @@ svg {
     fill: darken(#ccc, 10%);
   }
 }
-
 .task-edit,
 .cancel,
 .accept {
@@ -162,10 +161,11 @@ svg {
 }
 
 .cancel {
-  fill: #D94A4A;
+  margin-right: 10px;
+  fill: #ccc;
 
   &:hover {
-    fill: darken(#D94A4A, 10%);
+    fill: #D94A4A;
   }
 }
 

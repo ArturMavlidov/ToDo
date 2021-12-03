@@ -32,3 +32,5 @@ export const replaceHtml = ({ component, html }) => {
 
 export const closestRole = (element, role) =>
   element.closest(`[data-role~="${role}"]`);
+
+export {buildTask} from './buildTask'

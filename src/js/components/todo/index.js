@@ -4,6 +4,7 @@ import {
   closestRole,
   selectId,
   selectRole,
+  buildTask
 } from "../../helpers";
 
 import TodoForm from "./todo-form";
@@ -44,27 +45,7 @@ export default function todoComponent(context) {
     taskAccept.classList.toggle("dn");
   };
 
-  const handleTaskDelete = (target, taskItem) => {
-    const taskClose = closestRole(target, "task-close");
-    if (!taskClose) return
 
-    const taskCloseId = taskItem.dataset.id;
-    tasks = tasks.filter((item) => item.id != taskCloseId);
-    taskItem.remove();
-    return StorageService.update(tasks);
-  }
-
-  const handleTaskEdit = (taskEdit, taskItem) => {
-    if (!taskEdit) return;
-
-    const taskInput = selectRole("tasks-value", taskItem);
-
-    showIcons(taskItem);
-    taskInput.removeAttribute("readonly");
-    taskInput.focus();
-    taskInput.selectionStart = taskInput.value.length;
-    return attachEditEvents(taskItem);
-  };
 
   const handleEditCancel = ({target}) => {
     const taskItem = closestRole(target, "task-wrapper");
@@ -97,13 +78,33 @@ export default function todoComponent(context) {
     taskAccept.addEventListener("click", handleEditAccept);
   };
 
+  const handleTaskDelete = (target, taskItem) => {
+    const taskCloseId = taskItem.dataset.id;
+    tasks = tasks.filter((item) => item.id != taskCloseId);
+    taskItem.remove();
+    return StorageService.update(tasks);
+  };
+
+  const handleTaskEdit = (taskEdit, taskItem) => {
+    if (!taskEdit) return;
+
+    const taskInput = selectRole("tasks-value", taskItem);
+    showIcons(taskItem);
+    taskInput.removeAttribute("readonly");
+    taskInput.focus();
+    taskInput.selectionStart = taskInput.value.length;
+    return attachEditEvents(taskItem);
+  };
+
   const clickTasksContainer = ({ target }) => {
+    const taskClose = closestRole(target, "task-close");
     const taskItem = closestRole(target, "task-wrapper");
     const taskEdit = closestRole(target, "task-edit");
 
     if (!taskItem) return;
 
-    handleTaskDelete(target, taskItem);
+    if (taskClose)
+    return handleTaskDelete(target, taskItem);
     handleTaskEdit(taskEdit, taskItem);
 
     StorageService.update(tasks);
@@ -125,30 +126,6 @@ export default function todoComponent(context) {
     isDone
       ? taskWrapper.classList.add("done")
       : taskWrapper.classList.remove("done");
-  };
-
-  const buildTask = (lastTask) => {
-    const doneClass = lastTask.isDone ? "done" : " ";
-    return `<div class="tasks-wrapper ${doneClass}" data-role="task-wrapper" data-id="${lastTask.id}">
-              <div class="tasks-item" data-role="tasks-item">
-                <input type="text" class="tasks-text" value="${lastTask.text}" data-role="tasks-value" readonly/>
-                <div class="tasks-date">${lastTask.date}</div>
-              </div>
-              <div class="task-icons" data-role="task-icons">
-                <svg class="task-close" data-role="task-close" width="16" height="16">
-                  <use xlink:href="#close"></use>
-                </svg>
-                <svg class="task-edit" data-role="task-edit" width="16" height="16">
-                  <use xlink:href="#edit"></use>
-                </svg>
-                <svg class="cancel dn" data-role="task-cancel" width="20" height="20">
-                  <use xlink:href="#cancel"></use>
-                </svg>
-                <svg class="accept dn" data-role="task-accept" width="20" height="20">
-                  <use xlink:href="#accept"></use>
-                </svg>
-              </div>
-            </div>`;
   };
 
   const getTasks = (isDone) => {
