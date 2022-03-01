@@ -45,8 +45,6 @@ export default function todoComponent(context) {
     taskAccept.classList.toggle("dn");
   };
 
-
-
   const handleEditCancel = ({target}) => {
     const taskItem = closestRole(target, "task-wrapper");
     const taskInput = selectRole("tasks-value", taskItem);
