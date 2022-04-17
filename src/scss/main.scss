@@ -50,7 +50,7 @@ svg {
   }
 
   &-tasks {
-    margin-right: -15px;
+    margin-right: -40px;
     max-height: 310px;
     overflow: auto;
     margin-top: 15px;
@@ -83,14 +83,8 @@ svg {
   display: flex;
 
   &.done {
-    .tasks-item {
+    .task-item {
       background-color: #e8ffd7;
-    }
-  }
-
-  &.edit {
-    .tasks-item {
-      background-color: #eff17a;
     }
   }
 
@@ -101,7 +95,7 @@ svg {
   }
 }
 
-.tasks-item {
+.task-item {
   display: flex;
   align-items: center;
   min-width: 514px;
@@ -149,21 +143,33 @@ svg {
   }
 }
 
+.task-icon {
+  transition: fill 0.1s linear;
+}
+
 .task-close {
   margin-right: 10px;
 }
 
 .task-edit {
+  margin-right: 10px;
   fill: #ccc;
 
   &:hover {
     fill: darken(#ccc, 10%);
   }
 }
-.task-edit,
-.cancel,
-.accept {
-  transition: fill 0.1s linear;
+
+.task-done {
+  fill: #d4d4d4;
+
+  &.active {
+    fill: #0b8b00;
+  }
+
+  &:hover {
+    fill: #0b8b00;
+  }
 }
 
 .cancel {
@@ -177,6 +183,7 @@ svg {
 
 .accept {
   fill: #ccc;
+
   &:hover {
     fill: #14ae07;
   }

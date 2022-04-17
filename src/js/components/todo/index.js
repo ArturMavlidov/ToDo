@@ -4,7 +4,8 @@ import {
   closestRole,
   selectId,
   selectRole,
-  buildTask
+  selectRoles,
+  buildTask,
 } from "../../helpers";
 
 import TodoForm from "./todo-form";
@@ -18,7 +19,7 @@ export default function todoComponent(context) {
 
   const addTask = (task) => {
     tasks.push(task);
-    taskUpdated(task);
+    updateTasks(task);
     StorageService.set(JSON.stringify(tasks));
   };
 
@@ -34,35 +35,29 @@ export default function todoComponent(context) {
   };
 
   const showIcons = (taskItem) => {
-    const taskClose = selectRole("task-close", taskItem);
-    const taskEdit = selectRole("task-edit", taskItem);
-    const taskCancel = selectRole("task-cancel", taskItem);
-    const taskAccept = selectRole("task-accept", taskItem);
-
-    taskClose.classList.toggle("dn");
-    taskEdit.classList.toggle("dn");
-    taskCancel.classList.toggle("dn");
-    taskAccept.classList.toggle("dn");
+    const taskIcons = selectRoles("task-icon", taskItem);
+    taskIcons.forEach((icon) => icon.classList.toggle("dn"));
   };
 
-  const handleEditCancel = ({target}) => {
+  const handleEditCancel = ({ target }) => {
     const taskItem = closestRole(target, "task-wrapper");
-    const taskInput = selectRole("tasks-value", taskItem);
-    const task = tasks.find(item => item.id == taskItem.dataset.id);
+    const taskInput = selectRole("task-value", taskItem);
+    const task = tasks.find((item) => item.id == taskItem.dataset.id);
+
     taskInput.value = task.text;
     taskInput.setAttribute("readonly", true);
     showIcons(taskItem);
-  }
+  };
 
   const handleEditAccept = ({ target }) => {
     const taskItem = closestRole(target, "task-wrapper");
-    const taskInput = selectRole("tasks-value", taskItem);
+    const taskInput = selectRole("task-value", taskItem);
     taskInput.setAttribute("readonly", true);
 
-    if (taskInput.value.trim() != '') {
+    if (taskInput.value.trim() != "") {
       showIcons(taskItem);
       const task = tasks.find((item) => item.id == taskItem.dataset.id);
-      return task.text = taskInput.value;
+      return (task.text = taskInput.value);
     }
 
     handleEditCancel({ target });
@@ -76,7 +71,7 @@ export default function todoComponent(context) {
     taskAccept.addEventListener("click", handleEditAccept);
   };
 
-  const handleTaskDelete = (target, taskItem) => {
+  const handleTaskDelete = (taskItem) => {
     const taskCloseId = taskItem.dataset.id;
     tasks = tasks.filter((item) => item.id != taskCloseId);
     taskItem.remove();
@@ -86,7 +81,8 @@ export default function todoComponent(context) {
   const handleTaskEdit = (taskEdit, taskItem) => {
     if (!taskEdit) return;
 
-    const taskInput = selectRole("tasks-value", taskItem);
+    const taskInput = selectRole("task-value", taskItem);
+
     showIcons(taskItem);
     taskInput.removeAttribute("readonly");
     taskInput.focus();
@@ -94,27 +90,29 @@ export default function todoComponent(context) {
     return attachEditEvents(taskItem);
   };
 
-  const clickTasksContainer = ({ target }) => {
-    const taskClose = closestRole(target, "task-close");
-    const taskItem = closestRole(target, "task-wrapper");
-    const taskEdit = closestRole(target, "task-edit");
+  const handleTaskDone = (taskItem, icon) => {
+    const { id: taskId } = taskItem.dataset;
+    const targetTask = tasks.find((item) => item.id == taskId);
 
-    if (!taskItem) return;
+    icon.classList.toggle('active');
 
-    if (taskClose)
-    return handleTaskDelete(target, taskItem);
-    handleTaskEdit(taskEdit, taskItem);
-
+    targetTask.isDone = !targetTask.isDone;
+    updateUi(targetTask);
     StorageService.update(tasks);
   };
 
-  const changeDoneStatus = ({ target }) => {
+  const clickTasksContainer = ({ target }) => {
     const taskItem = closestRole(target, "task-wrapper");
+    const taskClose = closestRole(target, "task-close");
+    const taskEdit = closestRole(target, "task-edit");
+    const taskDone = closestRole(target, "task-done");
+
     if (!taskItem) return;
-    const { id: taskId } = taskItem.dataset;
-    const targetTask = tasks.find((item) => item.id == taskId);
-    targetTask.isDone = !targetTask.isDone;
-    updateUi(targetTask);
+
+    if (taskDone) return handleTaskDone(taskItem, taskDone);
+    if (taskClose) return handleTaskDelete(taskItem);
+    handleTaskEdit(taskEdit, taskItem);
+
     StorageService.update(tasks);
   };
 
@@ -134,7 +132,7 @@ export default function todoComponent(context) {
     }
   };
 
-  const taskUpdated = (task) => {
+  const updateTasks = (task) => {
     addHtml({ component: tasksContainer, html: buildTask(task) });
   };
 
@@ -145,20 +143,18 @@ export default function todoComponent(context) {
   };
 
   const pageUpdated = () => {
-    StorageService.get(taskUpdated);
+    StorageService.get(updateTasks);
     tasks = StorageService.get();
   };
 
   const bindEvents = () => {
     tasksContainer.addEventListener("click", clickTasksContainer);
-    tasksContainer.addEventListener("dblclick", changeDoneStatus);
   };
 
   const init = () => {
     initComponents();
     bindEvents();
     pageUpdated();
-    const taskValue = selectRole("tasks-value");
   };
 
   init();
