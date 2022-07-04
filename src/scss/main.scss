@@ -4,6 +4,12 @@
 body {
   font-family: "Roboto";
   font-size: 18px;
+
+  transition: background-color 0.25s linear;
+}
+
+.dark {
+  background-color: #000;
 }
 
 .container {
@@ -19,6 +25,18 @@ svg {
 
 .form-control {
   border: 1px solid #000;
+}
+
+.input {
+  .dark & {
+    background-color: #000;
+    border: 1px solid #fff;
+    color: #fff;
+
+    &:focus {
+      color: #fff;
+    }
+  }
 }
 
 .todo {
@@ -38,6 +56,7 @@ svg {
         color: #dedede;
       }
     }
+
     &__buttons {
       display: flex;
 
@@ -69,6 +88,11 @@ svg {
 
       &::placeholder {
         color: #dedede;
+      }
+
+      .dark & {
+        background-color: #000;
+        border: 1px solid #fff;
       }
     }
 
@@ -103,11 +127,17 @@ svg {
   padding-left: 30px;
   padding-right: 23px;
   margin-right: 20px;
+
+  background-color: #fff;
   border: 1px solid #000;
   cursor: pointer;
 
   &:not(:last-child) {
     margin-bottom: 15px;
+  }
+
+  .dark & {
+    background-color: #ede8bb;
   }
 }
 
@@ -186,6 +216,53 @@ svg {
 
   &:hover {
     fill: #14ae07;
+  }
+}
+
+.theme {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 70px;
+  height: 35px;
+  border-radius: 35px;
+
+  background: #fff;
+  transition: all 0.25s linear;
+
+  box-shadow: inset 0 2px 60px rgba(0, 0, 0, 0.1),
+    inset 0 2px 8px rgba(0, 0, 0, 0.1), inset 0 -4px 4px rgba(0, 0, 0, 0.05);
+
+  &.active {
+    background: #222;
+    box-shadow: inset 0 8px 60px rgba(0, 0, 0, 0.1),
+      inset 0 8px 8px rgba(0, 0, 0, 0.1), inset 0 -4px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(to bottom, #eaeaea, #f9f9f9);
+  border-radius: 50%;
+  transform: scale(0.9);
+  transition: all 0.25s linear;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1),
+    inset 0 4px 4px rgba(255, 255, 255, 1),
+    inset 0 -4px 4px rgba(255, 255, 255, 1);
+
+  .active & {
+    left: 35px;
+    background: linear-gradient(to bottom, #444, #222);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5),
+      inset 0 4px 4px rgba(255, 255, 255, 0.2),
+      inset 0 -4px 4px rgba(255, 255, 255, 0.2);
   }
 }
 
