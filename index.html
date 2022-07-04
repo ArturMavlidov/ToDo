@@ -60,15 +60,26 @@
     </svg>
     <svg style="display: none">
       <symbol id="done" viewBox="0 0 32 32">
-        <path d="M16,1A15,15,0,1,0,31,16,15,15,0,0,0,16,1Zm0,28.33A13.33,13.33,0,1,1,29.33,16,13.35,13.35,0,0,1,16,29.33Z"/><polygon points="13.91 18.59 10.71 15.39 9.29 16.8 13.91 21.41 23.61 11.71 22.2 10.29 13.91 18.59"/>
+        <path
+          d="M16,1A15,15,0,1,0,31,16,15,15,0,0,0,16,1Zm0,28.33A13.33,13.33,0,1,1,29.33,16,13.35,13.35,0,0,1,16,29.33Z"
+        />
+        <polygon
+          points="13.91 18.59 10.71 15.39 9.29 16.8 13.91 21.41 23.61 11.71 22.2 10.29 13.91 18.59"
+        />
       </symbol>
     </svg>
+    <div class="theme">
+      <button data-role="theme-btn" class="theme-btn">
+        <i class="theme-indicator"></i>
+      </button>
+      <span class="theme-hint">Dark mode</span>
+    </div>
     <div class="container">
       <div class="todo" data-role="todo">
         <div class="todo-header">
           <div class="todo-header__search">
             <input
-              class="form-control todo-header__input"
+              class="form-control todo-header__input input"
               placeholder="Search..."
               aria-label="Search"
               data-role="search-input"
@@ -95,7 +106,7 @@
         <div class="todo-add">
           <form name="publish" action="#" data-role="todo-form">
             <input
-              class="form-control todo-add__input"
+              class="form-control todo-add__input input"
               data-role="add-input"
               placeholder="Введите новую задачу..."
             />
